@@ -1,4 +1,4 @@
-# OMOD extractor
+# OMOD helpers
 
 In this repo, there are a few scripts to you help you work with OMOD.
 
