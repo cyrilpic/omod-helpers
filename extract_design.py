@@ -14,12 +14,12 @@ def extract_design(folder_path, design_id):
     path = Path(folder_path)
 
     if not path.is_dir():
-        return
+        raise Exception("Path to result folder is not a directory")
 
     folder_name = path.name
     matches = re.match(r"ev-(\d+)", folder_name)
     if not matches:
-        return
+        raise Exception("Could not extract evaluation id from folder name")
     ev_id = int(matches[1])
     json_fname = f"{path.name}.json"
 
@@ -27,7 +27,7 @@ def extract_design(folder_path, design_id):
         ev_data = json.load(f)
 
     if ev_data['model_name'] != "optimization":
-        return
+        raise Exception("Results are not optimization results")
 
     op = ev_data['input']['op']
     settings = ev_data['input']['settings']
@@ -39,7 +39,7 @@ def extract_design(folder_path, design_id):
             results = pd.DataFrame(res['data'])
 
     if results is None:
-        return
+        raise Exception("Results are empty")
 
     actuator = results.iloc[design_id, :].to_dict()
 
