@@ -37,6 +37,8 @@ def extract_design(folder_path, design_id):
     for res in ev_data['results']:
         if res['name'] == 'raw_pop':
             results = pd.DataFrame(res['data'])
+            results.index = results.index.astype('int')
+            results.sort_index(inplace=True)
 
     if results is None:
         raise Exception("Results are empty")
